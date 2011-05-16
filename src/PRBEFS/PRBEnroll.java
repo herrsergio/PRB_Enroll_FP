@@ -2,6 +2,7 @@ package PRBEFS;
 
 import javax.swing.*;
 
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -187,6 +188,12 @@ public class PRBEnroll extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JFrame MainFrame = new PRBEnroll();
+		
+		MainFrame.setIconImage(
+				new ImageIcon(
+						PRBEnroll.class.getResource("/resources/prb.png")).getImage()
+				);
+		
 		MainFrame.setJMenuBar(menuBar);
 		MainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		MainFrame.setVisible(true);
