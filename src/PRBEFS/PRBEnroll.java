@@ -113,6 +113,7 @@ public class PRBEnroll extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				Employee emp = (Employee) EmployeeBox.getSelectedItem();
 				String    id = emp.getID();
+				String  name = emp.getName();
 				String instructions;
 				
 				int f = 0;
@@ -140,7 +141,21 @@ public class PRBEnroll extends JFrame implements ActionListener {
 		        if(Integer.parseInt(id) == 0) {
 		        	JOptionPane.showMessageDialog(EnrollPanel, "Favor de seleccionar un asociado.", 
 		        			"Seleccionar Asociado", JOptionPane.ERROR_MESSAGE);
-		        } else {		        
+		        } else {
+		        	
+		        	String fingerprintFile = "/usr/bin/ph/fingerprint/data/"+id+
+		        			"/fprint/prints/0002/00000000/"+f;
+		        	
+		        	File fpF = new File(fingerprintFile);
+		        	
+		        	if(fpF.exists()) {
+		        		instructions = "Ya ha sido registrado el dedo " +fingerName+ " para el asociado "+name+".\n"+
+		        		             "Si desea volver a registrarlo, favor de comunicarse a Sistemas.";
+		        		JOptionPane.showMessageDialog(EnrollPanel, instructions, "Atención", JOptionPane.WARNING_MESSAGE);
+		        		
+		        		System.exit(1);
+		        	}
+		        	
 		        	instructions = "A continuación debe colocar su dedo "+fingerName+" en el lector. Presione Aceptar para continuar";
 		        
 		        	JOptionPane.showMessageDialog(EnrollPanel, instructions);
