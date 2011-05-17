@@ -1,13 +1,12 @@
 package PRBEFS;
 
 import javax.swing.*;
-
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 
 public class PRBEnroll extends JFrame implements ActionListener {
 
@@ -83,8 +82,11 @@ public class PRBEnroll extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				URL img = PRBEnroll.class.getResource("/resources/fingerprint.png");
+				String imagesrc = "<img src=\"" +img+ "\" width=\0\" height=\0\" ";
 				JOptionPane.showMessageDialog(EnrollPanel,
-					    "PRB Enroll Fingerprint System\nSergio Cuellar Valdes\n2011",
+						"<html><center>" +imagesrc+ 
+					    "<br>PRB Enroll Fingerprint System<br>&copy; Sergio Cuellar Valdes 2011</cenetr></html>",
 					    "Acerca de",
 					    JOptionPane.PLAIN_MESSAGE);
 			}
