@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -83,10 +84,11 @@ public class PRBEnroll extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				URL img = PRBEnroll.class.getResource("/resources/fingerprint.png");
-				String imagesrc = "<img src=\"" +img+ "\" width=\0\" height=\0\" ";
+				
+				String imagesrc = "<img src=\"" +img+ "\" width=\0\" height=\0\">";
 				JOptionPane.showMessageDialog(EnrollPanel,
 						"<html><center>" +imagesrc+ 
-					    "<br>PRB Enroll Fingerprint System<br>&copy; Sergio Cuellar Valdes 2011</cenetr></html>",
+					    "<br>PRB Enroll Fingerprint System<br>&copy; Sergio Cuellar Valdes 2011</center></html>",
 					    "Acerca de",
 					    JOptionPane.PLAIN_MESSAGE);
 			}
@@ -143,14 +145,58 @@ public class PRBEnroll extends JFrame implements ActionListener {
 		        
 		        	JOptionPane.showMessageDialog(EnrollPanel, instructions);
 		        
-		        	enroll(f, "/tmp/Employees", id);
-		        
-		        	JOptionPane.showMessageDialog(EnrollPanel, "Huella digital capturada. Gracias");
+		        	enroll(f, "/usr/bin/ph/fingerprint/data", id);
+		        	
+		        	convertPGM("/usr/bin/ph/fingerprint/bin/enrolled.pgm");
+		        	
+		        	
+		        	String img = "file:/usr/bin/ph/fingerprint/bin/enrolled.png";
+		        	
+					String imagesrc = "<img src=\"" +img+ "\" >";
+					
+					JOptionPane.showMessageDialog(EnrollPanel,
+							"<html><center>" +imagesrc+ 
+						    "<br><br>Huella digital capturada.</center></html>",
+						    "Huella Digital",
+						    JOptionPane.PLAIN_MESSAGE);
 		        	
 		        	JOptionPane.showMessageDialog(EnrollPanel,
 		        			"Puede seguir con la captura de huellas digitales");
+		        	
+		        	
+		        	deleteFile("/usr/bin/ph/fingerprint/bin/enrolled.png");
+		        	deleteFile("/usr/bin/ph/fingerprint/bin/enrolled.pgm");
+		        	
 		        }
 		        
+			}
+
+			
+			private void deleteFile(String file) {
+				// TODO Auto-generated method stub
+				File f = new File(file);
+				
+				f.delete();
+				
+			}
+			
+
+			private void convertPGM(String file) {
+				// TODO Auto-generated method stub
+				String cmd = "/usr/bin/convert " +file+ " "+
+					"/usr/bin/ph/fingerprint/bin/enrolled.png";
+				
+				try {
+					Process p = Runtime.getRuntime().exec(cmd);
+					try {
+						p.waitFor();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		
